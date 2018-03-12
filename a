@@ -1,0 +1,61 @@
+[33mcommit afdd20771f7b8b858dc1cb15ceadf4edb5d50898[m
+Author: Diegu Montes <mecayounbloque@gmail.com>
+Date:   Sun Mar 11 23:47:32 2018 -0600
+
+    finished
+
+[1mdiff --git a/public/js/app.js b/public/js/app.js[m
+[1mindex 992d03a..af57a0a 100644[m
+[1m--- a/public/js/app.js[m
+[1m+++ b/public/js/app.js[m
+[36m@@ -1,23 +1,21 @@[m
+ class ProductList extends React.Component {[m
+[31m-  constructor(props){[m
+[31m-  	super(props);[m
+[31m-  	this.state = {[m
+[31m-  		products: [],[m
+[31m-  	};[m
+[31m-  }[m
+ [m
+[31m-  componentDidMount() {[m
+[31m-    this.setState({ products: Seed.products });[m
+[31m-  }[m
+[32m+[m[32m  state = {[m
+[32m+[m[32m    products: [],[m
+[32m+[m[32m  };[m
+ [m
+   handleProductUpVote = (productId) => {[m
+[31m-    const products = this.state.products;[m
+[31m-    products.forEach((product) => {[m
+[31m-    	if(product.id == productId)[m
+[31m-    		product.votes = product.votes + 1;[m
+[32m+[m[32m    const nextProducts = this.state.products.map((product) => {[m
+[32m+[m[32m      if (product.id === productId) {[m
+[32m+[m[32m        return Object.assign({}, product, {[m
+[32m+[m[32m          votes: product.votes + 1,[m
+[32m+[m[32m        });[m
+[32m+[m[32m      } else {[m
+[32m+[m[32m        return product;[m
+[32m+[m[32m      }[m
+     });[m
+     this.setState({[m
+[31m-    	products: products,[m
+[32m+[m[41m    [m	[32mproducts: nextProducts,[m
+     });[m
+   }[m
+ [m
+[36m@@ -47,12 +45,8 @@[m [mclass ProductList extends React.Component {[m
+ }[m
+ [m
+ class Product extends React.Component {[m
+[31m-  constructor(props){[m
+[31m-  	super(props);[m
+[31m-  	this.handleUpVote = this.handleUpVote.bind(this);[m
+[31m-  }[m
+[31m-  handleUpVote(){[m
+[31m-  	this.props.onVote(this.props.id);[m
+[32m+[m[32m  handleUpVote = () => {[m
+[32m+[m[32m    this.props.onVote(this.props.id);[m
+   }[m
+   render() {[m
+     return ([m
