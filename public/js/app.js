@@ -1,9 +1,28 @@
 class ProductList extends React.Component {
-  handleProductUpVote = (productId) => {
-    console.log(productId + ' was upvoted');
+  constructor(props){
+  	super(props);
+  	this.state = {
+  		products: [],
+  	};
   }
+
+  componentDidMount() {
+    this.setState({ products: Seed.products });
+  }
+
+  handleProductUpVote = (productId) => {
+    const products = this.state.products;
+    products.forEach((product) => {
+    	if(product.id == productId)
+    		product.votes = product.votes + 1;
+    });
+    this.setState({
+    	products: products,
+    });
+  }
+
   render() {
-  	const products = Seed.products.sort((a, b) => (
+  	const products = this.state.products.sort((a, b) => (
       b.votes - a.votes
     ));
   	const productComponents = products.map((product) => (
